@@ -1,4 +1,4 @@
-package edu.design.pattern;
+package com.design.pattern;
 
 import java.util.ArrayList;
 import java.util.Arrays;

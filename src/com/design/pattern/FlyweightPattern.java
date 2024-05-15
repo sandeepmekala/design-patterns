@@ -1,4 +1,4 @@
-package edu.design.pattern;
+package com.design.pattern;
 
 import java.lang.management.ManagementFactory;
 import java.util.HashMap;

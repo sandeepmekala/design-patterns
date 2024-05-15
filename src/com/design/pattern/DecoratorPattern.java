@@ -1,4 +1,4 @@
-package edu.design.pattern;
+package com.design.pattern;
 
 // It is a Behavioral Pattern
 // Allows you to modify an object dynamically

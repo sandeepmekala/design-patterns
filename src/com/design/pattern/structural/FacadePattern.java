@@ -1,7 +1,9 @@
-package edu.design.pattern;
+package com.design.pattern.structural;
 
-// It is a Behavioral pattern
-// When you create simplified interface that performs many other actions behind the scenes
+// It is a Structural pattern
+// It is a refactoring pattern
+// Make code clean
+// Create simplified interface for lot of actions
 // In this example only deposit and withdraw are exposed to customer but behind the scenes we perform many actions to validate 
 public class FacadePattern {
 

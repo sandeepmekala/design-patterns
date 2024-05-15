@@ -1,4 +1,4 @@
-package edu.design.pattern;
+package com.design.pattern;
  
 // Decouple abstraction from its implementation so that two can vary independently
 // 2 layers of abstraction between classes and 1 class is dependent on other

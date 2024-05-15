@@ -1,4 +1,4 @@
-package edu.design.pattern;
+package com.design.pattern;
 
 // It is a Structural pattern
 // Provides a class with will limit access to another class

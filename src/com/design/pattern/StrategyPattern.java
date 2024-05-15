@@ -1,4 +1,4 @@
-package edu.design.pattern;
+package com.design.pattern;
 
 // It is a Creational Pattern
 // Defines a family of algorithms, encapsulate each one, and make them interchangeable. The strategy pattern lets the algorithm vary independently from client that use it.

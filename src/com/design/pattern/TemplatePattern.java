@@ -1,4 +1,4 @@
-package edu.design.pattern;
+package com.design.pattern;
  
 // Used to create a group of subclassses that have to execute similar group of methods
 // You can create an abstract class that contains a method called the template
