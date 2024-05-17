@@ -4,7 +4,7 @@ package com.design.pattern;
 // Provides a class with will limit access to another class
 // You may do this for security reasons
 // In this example, ATMProxy doesn't give us access to setter methods
-public class PrixyPattern {
+public class ProxyPattern {
 	public static void main(String[] args) {
 		GetATMData atmProxy = new ATMProxy();
 		System.out.println("ATM state: "+atmProxy.getATMState());

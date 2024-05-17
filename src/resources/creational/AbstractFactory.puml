@@ -1,0 +1,58 @@
+@startuml AbstractFactory
+
+interface Chair {
+    {abstract} + sitOn()
+}
+
+interface Table {
+    {abstract} + placeOn()
+}
+
+class WoodenChair {
+    + sitOn()
+}
+
+class PlasticChair {
+    + sitOn()
+}
+
+class WoodenTable {
+    + placeOn()
+}
+
+class PlasticTable {
+    + placeOn()
+}
+
+interface FurnitureFactory {
+    {abstract} + createChair(): Chair
+    {abstract} + createTable(): Table
+}
+
+class WoodenFurnitureFactory {
+    + createChair(): Chair
+    + createTable(): Table
+}
+
+class PlasticFurnitureFactory {
+    + createChair(): Chair
+    + createTable(): Table
+}
+
+class Client {
+    + main(args: String[]): void
+}
+
+FurnitureFactory <|.. WoodenFurnitureFactory
+FurnitureFactory <|.. PlasticFurnitureFactory
+
+Chair <|.. WoodenChair
+Chair <|.. PlasticChair
+Table <|.. WoodenTable
+Table <|.. PlasticTable
+
+Client --> FurnitureFactory
+Client --> Chair
+Client --> Table
+
+@enduml

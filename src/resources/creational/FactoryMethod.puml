@@ -1,0 +1,26 @@
+@startuml FactoryMethod
+
+abstract class EnemyShip {
+    -shipName: String
+    +getShipName(): String
+    +setShipName(shipName: String): void
+}
+
+class UFOEnemyShip {
+    +UFOEnemyShip()
+}
+
+class RocketEnemyShip {
+    +RocketEnemyShip()
+}
+
+class EnemyShipFactory {
+    +getEnemyShip(shipType: String): EnemyShip
+}
+
+Client --> EnemyShipFactory
+EnemyShipFactory --> EnemyShip
+EnemyShip <|-- UFOEnemyShip
+EnemyShip <|-- RocketEnemyShip
+
+@enduml

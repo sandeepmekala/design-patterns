@@ -1,0 +1,33 @@
+@startuml prototype
+
+interface VehiclePrototype {
+    {abstract} +clone(): VehiclePrototype
+}
+
+class CarPrototype {
+    -model: String
+    -color: String
+    +CarPrototype(model: String, color: String)
+    +CarPrototype(prototype: CarPrototype)
+    +getModel(): String
+    +getColor(): String
+    +setColor(color: String): void
+    +clone(): VehiclePrototype
+}
+
+class MotorcyclePrototype {
+    -brand: String
+    -type: String
+    +MotorcyclePrototype(brand: String, type: String)
+    +MotorcyclePrototype(prototype: MotorcyclePrototype)
+    +getBrand(): String
+    +getType(): String
+    +setType(type: String): void
+    +clone(): VehiclePrototype
+}
+
+VehiclePrototype <|.. CarPrototype
+VehiclePrototype <|.. MotorcyclePrototype
+CLient --> VehiclePrototype
+
+@enduml

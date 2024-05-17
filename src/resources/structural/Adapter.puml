@@ -1,0 +1,29 @@
+@startuml Adapter
+
+interface Attacker {
+    {abstract} +drive(): void
+}
+
+class Tank {
+    +drive(): void
+}
+
+class Robot {
+    +walk(): void
+}
+
+class RobotAdapter {
+    -robot: Robot
+    +RobotAdapter(robot: Robot)
+    +drive(): void
+}
+
+Attacker <|.. Tank
+Robot <-- RobotAdapter
+Attacker <|.. RobotAdapter
+
+Client --> Attacker
+Client --> Robot
+Client --> RobotAdapter
+
+@enduml

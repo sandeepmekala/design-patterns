@@ -1,0 +1,29 @@
+@startuml
+
+interface SortingStrategy {
+    {abstract} +sort(array: int[]): void
+}
+
+class BubbleSort {
+    +sort(array: int[]): void
+}
+
+class QuickSort {
+    +sort(array: int[]): void
+}
+
+class Sorter {
+    -strategy: SortingStrategy
+    +setStrategy(strategy: SortingStrategy): void
+    +performSort(array: int[]): void
+}
+
+class Client {
+}
+
+SortingStrategy <|.. BubbleSort
+SortingStrategy <|.. QuickSort
+Sorter o-- SortingStrategy
+Client --> Sorter
+
+@enduml

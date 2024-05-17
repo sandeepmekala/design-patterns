@@ -3,7 +3,7 @@ package com.design.pattern.creational;
 // It is a Creational Pattern
 // Used when we want to eliminate the option of instantiating more then one object
 // Logger classes
-public class SingletonPattern {
+public class SingletonClient {
 
 	public static void main(String[] args) {
 		Singleton instance1 = Singleton.getInstance();
@@ -28,3 +28,4 @@ class Singleton{
 		return instance;
 	}
 }
+
