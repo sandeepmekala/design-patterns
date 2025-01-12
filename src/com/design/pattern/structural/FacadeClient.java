@@ -6,74 +6,51 @@ package com.design.pattern.structural;
 // Create simplified interface for lot of actions
 // In this example only deposit and withdraw are exposed to customer but behind the scenes we perform many actions to validate public class FacadeClient {
 // Subsystem class 1
-class Engine {
-    void start() {
-        System.out.println("Engine started");
+class Product {
+    public void getProductDetails() {
+        /* Fetch product logic */ }
+}
+
+class Payment {
+    public void processPayment() {
+        /* Payment logic */ }
+}
+
+class Invoice {
+    public void generateInvoice() {
+        /* Invoice logic */ }
+}
+
+class Notification {
+    public void sendNotification() {
+        /* Notification logic */ }
+}
+
+class OrderFacade {
+    private Product product;
+    private Payment payment;
+    private Invoice invoice;
+    private Notification notification;
+
+    public OrderFacade() {
+        this.product = new Product();
+        this.payment = new Payment();
+        this.invoice = new Invoice();
+        this.notification = new Notification();
     }
-    
-    void stop() {
-        System.out.println("Engine stopped");
+
+    public void createOrder() {
+        product.getProductDetails();
+        payment.processPayment();
+        invoice.generateInvoice();
+        notification.sendNotification();
     }
 }
 
-// Subsystem class 2
-class AirConditioner {
-    void turnOn() {
-        System.out.println("Air conditioner turned on");
-    }
-    
-    void turnOff() {
-        System.out.println("Air conditioner turned off");
-    }
-}
-
-// Subsystem class 3
-class MusicPlayer {
-    void playMusic() {
-        System.out.println("Music playing");
-    }
-    
-    void stopMusic() {
-        System.out.println("Music stopped");
-    }
-}
-
-// Facade class
-class CarFacade {
-    private Engine engine;
-    private AirConditioner airConditioner;
-    private MusicPlayer musicPlayer;
-
-    public CarFacade() {
-        this.engine = new Engine();
-        this.airConditioner = new AirConditioner();
-        this.musicPlayer = new MusicPlayer();
-    }
-
-    // Facade methods
-    void startCar() {
-        engine.start();
-        airConditioner.turnOn();
-        musicPlayer.playMusic();
-    }
-    
-    void stopCar() {
-        engine.stop();
-        airConditioner.turnOff();
-        musicPlayer.stopMusic();
-    }
-}
-
-// Client - Car driver
-public class FacadeClient {
+// Client Code
+class FacadeClient {
     public static void main(String[] args) {
-        CarFacade carFacade = new CarFacade();
-
-        // Start the car
-        carFacade.startCar();
-        System.out.println("Driving...");
-
-        // Stop the car
-        carFacade.stopCar();
+        OrderFacade orderFacade = new OrderFacade();
+        orderFacade.createOrder();
     }
 }

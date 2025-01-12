@@ -1,73 +1,77 @@
 package com.design.pattern.behavioural;
 
 import java.util.*;
-import java.util.Iterator;
  
 // Iterator pattern provides you uniform way of accessing different collections of objects
 // If you get array, arraylist and hashtable of objects, you can use iterator to uniformly access them
 // You can also write polymorphic code because you can refer to each collection of objects because they implement the same interface
 
-// Iterator interface
-interface BookIterator {
+// Iterator Interface
+interface Iterator {
     boolean hasNext();
-    String next();
+    Object next();
 }
 
-// ConcreteIterator
-class BookListIterator implements BookIterator {
-    private List<String> books;
-    private int position;
+// Aggregate Interface
+interface Aggregate {
+    Iterator createIterator();
+}
 
-    public BookListIterator(List<String> books) {
+// Book Class
+class Book {
+    String title;
+    double price;
+
+    public Book(String title, double price) {
+        this.title = title;
+        this.price = price;
+    }
+}
+
+// Concrete Aggregate (Library)
+class Library implements Aggregate {
+    private List<Book> books;
+
+    public Library(List<Book> books) {
         this.books = books;
-        this.position = 0;
+    }
+
+    public Iterator createIterator() {
+        return new BookIterator(books);
+    }
+}
+
+// Concrete Iterator (BookIterator)
+class BookIterator implements Iterator {
+    private List<Book> books;
+    private int index = 0;
+
+    public BookIterator(List<Book> books) {
+        this.books = books;
     }
 
     public boolean hasNext() {
-        return position < books.size();
+        return index < books.size();
     }
 
-    public String next() {
-        if (hasNext()) {
-            return books.get(position++);
-        }
-        return null;
+    public Object next() {
+        return hasNext() ? books.get(index++) : null;
     }
 }
 
-// Aggregate interface
-interface BookCollection {
-    BookIterator createIterator();
-}
-
-// ConcreteAggregate
-class Library implements BookCollection {
-    private List<String> books;
-
-    public Library() {
-        this.books = new ArrayList<>();
-    }
-
-    public void addBook(String book) {
-        books.add(book);
-    }
-
-    public BookIterator createIterator() {
-        return new BookListIterator(books);
-    }
-}
-
-// Client
+// Client Class
 public class IteratorClient {
     public static void main(String[] args) {
-        Library library = new Library();
-        library.addBook("Book 1");
-        library.addBook("Book 2");
-        library.addBook("Book 3");
+        Book book1 = new Book("Java Design Patterns", 500);
+        Book book2 = new Book("Effective Java", 600);
+        Book book3 = new Book("Clean Code", 450);
 
-        BookIterator iterator = library.createIterator();
+        Library library = new Library(Arrays.asList(book1, book2, book3));
+
+        Iterator iterator = library.createIterator();
         while (iterator.hasNext()) {
-            System.out.println(iterator.next());
+            Book book = (Book) iterator.next();
+            System.out.println("Book: " + book.title + ", Price: " + book.price);
         }
     }
 }

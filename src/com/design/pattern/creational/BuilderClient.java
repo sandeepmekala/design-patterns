@@ -3,161 +3,101 @@ package com.design.pattern.creational;
 // It is a Creational Pattern
 // Used when we want to build an object made up from other objects
 // When we want to keep the creation of other object separate from main object
-public class BuilderClient {
-	public static void main(String[] args) {
-        // Create a builder for desktop
-        ComputerBuilder desktopBuilder = new DesktopBuilder();
-        // Build a desktop computer
-        Computer desktop = desktopBuilder.setCPU("Intel Core i5").setRAM(8).setStorage(256).build();
-        // Use the desktop computer
-        System.out.println("Desktop configuration:");
-        System.out.println("Type: " + desktop.getType());
-        System.out.println("CPU: " + desktop.getCPU());
-        System.out.println("RAM: " + desktop.getRAM() + "GB");
-        System.out.println("Storage: " + desktop.getStorage() + "GB");
+// Product Class
+class Student {
+    private final String rollNumber; // Mandatory
+    private final String name;       // Optional
+    private final int age;           // Optional
+    private final String fatherName; // Optional
+    private final String motherName; // Optional
 
-        // Create a builder for laptop
-        ComputerBuilder laptopBuilder = new LaptopBuilder();
-        // Alternatively, use a director to construct the laptop
-        // ComputerDirector director = new ComputerDirector(laptopBuilder);
-        // Computer laptop = director.construct();
-
-        // Build a laptop computer
-        Computer laptop = laptopBuilder.setCPU("Intel Core i9").setRAM(32).setStorage(1024).build();
-        // Use the laptop computer
-        System.out.println("\nLaptop configuration:");
-        System.out.println("Type: " + laptop.getType());
-        System.out.println("CPU: " + laptop.getCPU());
-        System.out.println("RAM: " + laptop.getRAM() + "GB");
-        System.out.println("Storage: " + laptop.getStorage() + "GB");
+    Student(StudentBuilder builder) {
+        this.rollNumber = builder.rollNumber;
+        this.name = builder.name;
+        this.age = builder.age;
+        this.fatherName = builder.fatherName;
+        this.motherName = builder.motherName;
     }
 }
 
-// Product class representing a Computer
-class Computer {
-    private String type; // Desktop or Laptop
-    private String CPU;
-    private int RAM; // in GB
-    private int storage; // in GB
+// Builder Class
+class StudentBuilder {
+    final String rollNumber; // Mandatory
+    String name;
+    int age;
+    String fatherName;
+    String motherName;
 
-    public Computer(String type, String CPU, int RAM, int storage) {
-        this.type = type;
-        this.CPU = CPU;
-        this.RAM = RAM;
-        this.storage = storage;
+    public StudentBuilder(String rollNumber) {
+        this.rollNumber = rollNumber;
     }
 
-    // Getters for parts
-    public String getType() {
-        return type;
+    public StudentBuilder setName(String name) {
+        this.name = name;
+        return this;
     }
 
-    public String getCPU() {
-        return CPU;
+    public StudentBuilder setAge(int age) {
+        this.age = age;
+        return this;
     }
 
-    public int getRAM() {
-        return RAM;
+    public StudentBuilder setFatherName(String fatherName) {
+        this.fatherName = fatherName;
+        return this;
     }
 
-    public int getStorage() {
-        return storage;
+    public StudentBuilder setMotherName(String motherName) {
+        this.motherName = motherName;
+        return this;
+    }
+
+    public Student2 build() {
+        return new Student2(this);
     }
 }
 
-// Builder interface
-interface ComputerBuilder {
-    ComputerBuilder setType(String type);
-    ComputerBuilder setCPU(String CPU);
-    ComputerBuilder setRAM(int RAM);
-    ComputerBuilder setStorage(int storage);
-    Computer build();
-}
+// Director Class
+class StudentDirector {
+    private final StudentBuilder builder;
 
-// Concrete builder for Desktop computers
-class DesktopBuilder implements ComputerBuilder {
-    private String type = "Desktop";
-    private String CPU;
-    private int RAM;
-    private int storage;
-
-    @Override
-    public ComputerBuilder setType(String type) {
-        this.type = type;
-        return this;
-    }
-
-    @Override
-    public ComputerBuilder setCPU(String CPU) {
-        this.CPU = CPU;
-        return this;
-    }
-
-    @Override
-    public ComputerBuilder setRAM(int RAM) {
-        this.RAM = RAM;
-        return this;
-    }
-
-    @Override
-    public ComputerBuilder setStorage(int storage) {
-        this.storage = storage;
-        return this;
-    }
-
-    @Override
-    public Computer build() {
-        return new Computer(type, CPU, RAM, storage);
-    }
-}
-
-// Concrete builder for Laptop computers
-class LaptopBuilder implements ComputerBuilder {
-    private String type = "Laptop";
-    private String CPU;
-    private int RAM;
-    private int storage;
-
-    @Override
-    public ComputerBuilder setType(String type) {
-        this.type = type;
-        return this;
-    }
-
-    @Override
-    public ComputerBuilder setCPU(String CPU) {
-        this.CPU = CPU;
-        return this;
-    }
-
-    @Override
-    public ComputerBuilder setRAM(int RAM) {
-        this.RAM = RAM;
-        return this;
-    }
-
-    @Override
-    public ComputerBuilder setStorage(int storage) {
-        this.storage = storage;
-        return this;
-    }
-
-    @Override
-    public Computer build() {
-        return new Computer(type, CPU, RAM, storage);
-    }
-}
-
-// Director class (optional)
-class ComputerDirector {
-    private ComputerBuilder builder;
-
-    public ComputerDirector(ComputerBuilder builder) {
+    public StudentDirector(StudentBuilder builder) {
         this.builder = builder;
     }
 
-    public Computer construct() {
-        // Define the construction process here if needed
-        return builder.setType("Laptop").setCPU("Intel Core i7").setRAM(16).setStorage(512).build();
+    public Student2 constructEngineeringStudent() {
+        return builder
+                .setName("John Doe")
+                .setAge(20)
+                .setFatherName("Mr. Doe")
+                .build();
+    }
+
+    public Student2 constructMBAStudent() {
+        return builder
+                .setName("Jane Smith")
+                .setAge(22)
+                .setFatherName("Mr. Smith")
+                .setMotherName("Mrs. Smith")
+                .build();
+    }
+}
+
+// Main Class
+public class BuilderClient {
+    public static void main(String[] args) {
+        // Create a Director for Engineering Student
+        StudentBuilder engineeringBuilder = new StudentBuilder("ENG001");
+        StudentDirector engineeringDirector = new StudentDirector(engineeringBuilder);
+        Student2 engineeringStudent = engineeringDirector.constructEngineeringStudent();
+
+        // Create a Director for MBA Student
+        StudentBuilder mbaBuilder = new StudentBuilder("MBA001");
+        StudentDirector mbaDirector = new StudentDirector(mbaBuilder);
+        Student2 mbaStudent = mbaDirector.constructMBAStudent();
+
+        // Print the results
+        System.out.println(engineeringStudent);
+        System.out.println(mbaStudent);
     }
 }

@@ -2,98 +2,45 @@ package com.design.pattern.creational;
 
 // It is a Creational Pattern
 // Used when we need to create new object by cloning(copying) other object
+// Prototype Interface
+interface Prototype {
+    Prototype clone();
+}
+
+// Student Class implementing Prototype
+class Student2 implements Prototype {
+    private int age;
+    private int rollNumber;
+    private String name;
+
+    // Constructor
+    public Student2(int age, int rollNumber, String name) {
+        this.age = age;
+        this.rollNumber = rollNumber;
+        this.name = name;
+    }
+
+    // Implementing the clone method
+    @Override
+    public Student2 clone() {
+        return new Student2(this.age, this.rollNumber, this.name);
+    }
+}
+
+// Main Class to Test
 public class PrototypeClient {
-    
-	public static void main(String[] args) {
-        // Create prototypes for car and motorcycle
-        CarPrototype carPrototype = new CarPrototype("Toyota Camry", "Red");
-        MotorcyclePrototype motorcyclePrototype = new MotorcyclePrototype("Honda", "Sport");
+    public static void main(String[] args) {
+        // Original Object
+        Student2 originalStudent = new Student2(20, 101, "John Doe");
 
-        // Clone car prototype and modify the cloned instance
-        CarPrototype clonedCar = (CarPrototype) carPrototype.clone();
-        clonedCar.setColor("Blue");
+        // Cloning
+        Student2 clonedStudent = originalStudent.clone();
 
-        // Clone motorcycle prototype and modify the cloned instance
-        MotorcyclePrototype clonedMotorcycle = (MotorcyclePrototype) motorcyclePrototype.clone();
-        clonedMotorcycle.setType("Cruiser");
+        // Modifying clone
+        // clonedStudent.name = "Jane Doe";
 
-        // Print details of the original and modified prototypes
-        System.out.println("Original Car Prototype: " + carPrototype.getModel() + " - " + carPrototype.getColor());
-        System.out.println("Cloned Car Prototype: " + clonedCar.getModel() + " - " + clonedCar.getColor());
-
-        System.out.println("Original Motorcycle Prototype: " + motorcyclePrototype.getBrand() + " - " + motorcyclePrototype.getType());
-        System.out.println("Cloned Motorcycle Prototype: " + clonedMotorcycle.getBrand() + " - " + clonedMotorcycle.getType());
-    }
-}
-// Prototype interface
-interface VehiclePrototype {
-    VehiclePrototype clone();
-}
-
-// Concrete prototype for a car
-class CarPrototype implements VehiclePrototype {
-    private String model;
-    private String color;
-
-    public CarPrototype(String model, String color) {
-        this.model = model;
-        this.color = color;
-    }
-
-    // Deep copy constructor
-    public CarPrototype(CarPrototype prototype) {
-        this.model = prototype.model;
-        this.color = prototype.color;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    @Override
-    public VehiclePrototype clone() {
-        return new CarPrototype(this);
-    }
-}
-
-// Concrete prototype for a motorcycle
-class MotorcyclePrototype implements VehiclePrototype {
-    private String brand;
-    private String type;
-
-    public MotorcyclePrototype(String brand, String type) {
-        this.brand = brand;
-        this.type = type;
-    }
-
-    // Deep copy constructor
-    public MotorcyclePrototype(MotorcyclePrototype prototype) {
-        this.brand = prototype.brand;
-        this.type = prototype.type;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    @Override
-    public VehiclePrototype clone() {
-        return new MotorcyclePrototype(this);
+        // Printing Objects
+        System.out.println("Original Student: " + originalStudent);
+        System.out.println("Cloned Student: " + clonedStudent);
     }
 }

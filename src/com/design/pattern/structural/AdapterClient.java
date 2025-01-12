@@ -1,43 +1,47 @@
 package com.design.pattern.structural;
 
-// It is a Behavioural pattern
-// Allows two incompatible interfaces to works together
-// 
+// Step 1: Adaptee (Existing Interface)
+interface WeightMachine {
+    double getWeightInPounds();
+}
+
+class WeightMachineForBabies implements WeightMachine {
+    @Override
+    public double getWeightInPounds() {
+        return 28.0; // Returns weight in pounds
+    }
+}
+
+// Step 2: Target Interface (Expected Interface)
+interface WeightMachineAdapter {
+    double getWeightInKilograms();
+}
+
+// Step 3: Adapter Implementation
+class WeightMachineAdapterImpl implements WeightMachineAdapter {
+    private WeightMachine weightMachine;
+
+    public WeightMachineAdapterImpl(WeightMachine weightMachine) {
+        this.weightMachine = weightMachine;
+    }
+
+    @Override
+    public double getWeightInKilograms() {
+        double weightInPounds = weightMachine.getWeightInPounds();
+        return convertPoundsToKilograms(weightInPounds);
+    }
+
+    private double convertPoundsToKilograms(double pounds) {
+        return pounds * 0.453592; // Conversion logic
+    }
+}
+
+// Step 4: Client
 public class AdapterClient {
+    public static void main(String[] args) {
+        WeightMachine weightMachine = new WeightMachineForBabies();
+        WeightMachineAdapter adapter = new WeightMachineAdapterImpl(weightMachine);
 
-	public static void main(String[] args) {
-		Attacker tank = new Tank();
-		tank.drive();
-
-		Robot robot = new Robot();
-		robot.walk();
-		
-		Attacker newRobot = new RobotAdapter(robot);
-		newRobot.drive();
-	}
-}
-interface Attacker{
-	public int drive();
-}
-class Tank implements Attacker{
-	@Override
-	public int drive() {
-		System.out.println("drive forward 5kms");
-		return 5;
-	}
-}
-class Robot{
-	public int walk(){
-		System.out.println("Robot is waling forward 2000ms");
-		return 2000;
-	}
-}
-class RobotAdapter implements Attacker{
-	Robot robot;
-	public RobotAdapter(Robot robot){
-		this.robot = robot;
-	}
-	public int drive() {
-		return this.robot.walk()/1000;	// As expected behaviour is in kms
-	}
+        System.out.println("Weight in Kilograms: " + adapter.getWeightInKilograms());
+    }
 }

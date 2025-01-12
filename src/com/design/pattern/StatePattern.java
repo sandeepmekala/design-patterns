@@ -4,35 +4,23 @@ package com.design.pattern;
 // Context(Account) : Maintains an instance of the concrete state subclass that defines the current state
 // State : Defines an interface for encapsulating the behaviors associated with a particular state of the context
 // Concrete State : Each subclass implements the behavior associated with the state of context
-public class StatePattern {
-	public static void main(String[] args) {
-		ATMMachine2 atmMachine = new ATMMachine2();
-		atmMachine.insertCard();
-		atmMachine.ejectCard();
-		atmMachine.insertCard();
-		atmMachine.insertPin(1234);
-		atmMachine.requestCash(2000);
-		atmMachine.insertCard();
-		atmMachine.insertPin(1234);
-	}
-}
-interface ATMState2{
+interface ATMState{
 	void insertCard();
 	void ejectCard();
 	void insertPin(int pin);
 	void requestCash(int cash);
 }
-class ATMMachine2{
-	ATMState2 atmState;
+class ATMMachine{
+	ATMState atmState;
 	
-	ATMState2 hasCard;
-	ATMState2 noCard;
-	ATMState2 hasPin;
-	ATMState2 noCash;
+	ATMState hasCard;
+	ATMState noCard;
+	ATMState hasPin;
+	ATMState noCash;
 	
 	int cashInATMMachine = 2000;
 	boolean correctPinEntered = false;
-	public ATMMachine2(){
+	public ATMMachine(){
 		hasCard = new HasCard(this);
 		noCard = new NoCard(this);
 		hasPin = new HasPin(this);
@@ -43,7 +31,7 @@ class ATMMachine2{
 			atmState = noCash;
 		}
 	}
-	public void setAtmState(ATMState2 atmState) {
+	public void setAtmState(ATMState atmState) {
 		this.atmState = atmState;
 	}
 	public void setCashInATMMachine(int cashInATMMachine) {
@@ -61,22 +49,22 @@ class ATMMachine2{
 	void requestCash(int cash){
 		atmState.requestCash(cash);
 	}
-	public ATMState2 getHasCard() {
+	public ATMState getHasCard() {
 		return hasCard;
 	}
-	public ATMState2 getNoCard() {
+	public ATMState getNoCard() {
 		return noCard;
 	}
-	public ATMState2 getHasPin() {
+	public ATMState getHasPin() {
 		return hasPin;
 	}
-	public ATMState2 getNoCash() {
+	public ATMState getNoCash() {
 		return noCash;
 	}
 }
-class HasCard implements ATMState2{
-	ATMMachine2 atmMachine;
-	public HasCard(ATMMachine2 atmMachine){
+class HasCard implements ATMState{
+	ATMMachine atmMachine;
+	public HasCard(ATMMachine atmMachine){
 		this.atmMachine = atmMachine;
 	}
 	public void insertCard() {
@@ -102,9 +90,9 @@ class HasCard implements ATMState2{
 		System.out.println("Enter PIN first");
 	}
 }
-class NoCard implements ATMState2{
-	ATMMachine2 atmMachine;
-	public NoCard(ATMMachine2 atmMachine){
+class NoCard implements ATMState{
+	ATMMachine atmMachine;
+	public NoCard(ATMMachine atmMachine){
 		this.atmMachine = atmMachine;
 	}
 	public void insertCard() {
@@ -121,9 +109,9 @@ class NoCard implements ATMState2{
 		System.out.println("Insert card first");
 	}
 }
-class HasPin implements ATMState2{
-	ATMMachine2 atmMachine;
-	public HasPin(ATMMachine2 atmMachine){
+class HasPin implements ATMState{
+	ATMMachine atmMachine;
+	public HasPin(ATMMachine atmMachine){
 		this.atmMachine = atmMachine;
 	}
 	public void insertCard() {
@@ -154,9 +142,9 @@ class HasPin implements ATMState2{
 		}
 	}
 }
-class NoCash implements ATMState2{
-	ATMMachine2 atmMachine;
-	public NoCash(ATMMachine2 atmMachine){
+class NoCash implements ATMState{
+	ATMMachine atmMachine;
+	public NoCash(ATMMachine atmMachine){
 		this.atmMachine = atmMachine;
 	}
 	public void insertCard() {
@@ -170,5 +158,18 @@ class NoCash implements ATMState2{
 	}
 	public void requestCash(int cash) {
 		System.out.println("Don't have enough money");				
+	}
+}
+
+public class StatePattern {
+	public static void main(String[] args) {
+		ATMMachine atmMachine = new ATMMachine();
+		atmMachine.insertCard();
+		atmMachine.ejectCard();
+		atmMachine.insertCard();
+		atmMachine.insertPin(1234);
+		atmMachine.requestCash(2000);
+		atmMachine.insertCard();
+		atmMachine.insertPin(1234);
 	}
 }
