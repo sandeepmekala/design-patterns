@@ -1,4 +1,4 @@
-package com.design.pattern;
+package com.design.pattern.behavioural;
  
 // Allows a object to alter it behavior when its internal state changes. The object will appear to change its class.
 // Context(Account) : Maintains an instance of the concrete state subclass that defines the current state

@@ -3,6 +3,13 @@ package com.design.lld;
 import java.util.ArrayList;
 import java.util.List;
 
+enum ProductType {
+    ELECTRONICS,
+    FURNITURE,
+    DECORATIVE,
+    GROCERY
+}
+
 abstract class Product {
     private String name;
     private double originalPrice;
@@ -40,12 +47,6 @@ class ConcreteProduct extends Product {
     }
 }
 
-enum ProductType {
-    ELECTRONICS,
-    FURNITURE,
-    DECORATIVE,
-    GROCERY
-}
 
 abstract class CouponDecorator extends Product {
     protected Product product;

@@ -3,11 +3,11 @@ package com.design.pattern.behavioural;
 import java.util.ArrayList;
 import java.util.List;
 
-// Memento Class
-class Memento {
+// Memento
+class EditorState {
     private final String state;
 
-    public Memento(String state) {
+    public EditorState(String state) {
         this.state = state;
     }
 
@@ -16,8 +16,8 @@ class Memento {
     }
 }
 
-// Originator Class
-class Originator {
+// Originator
+class Editor {
     private String state;
 
     public void setState(String state) {
@@ -28,24 +28,24 @@ class Originator {
         return state;
     }
 
-    public Memento createMemento() {
-        return new Memento(state);
+    public EditorState createState() {
+        return new EditorState(state);
     }
 
-    public void restoreMemento(Memento memento) {
+    public void restore(EditorState memento) {
         this.state = memento.getState();
     }
 }
 
 // Caretaker Class
-class Caretaker {
-    private final List<Memento> mementoList = new ArrayList<>();
+class History {
+    private final List<EditorState> mementoList = new ArrayList<>();
 
-    public void addMemento(Memento memento) {
+    public void add(EditorState memento) {
         mementoList.add(memento);
     }
 
-    public Memento undo() {
+    public EditorState undo() {
         if (!mementoList.isEmpty()) {
             return mementoList.remove(mementoList.size() - 1);
         }
@@ -56,28 +56,19 @@ class Caretaker {
 // Client Code
 public class MementoClinet {
     public static void main(String[] args) {
-        Originator originator = new Originator();
-        Caretaker caretaker = new Caretaker();
+        Editor editor = new Editor();
+        History history = new History();
 
         // Initial State
-        originator.setState("State1");
-        caretaker.addMemento(originator.createMemento());
+        editor.setState("a");
+        history.add(editor.createState());
 
         // Change State
-        originator.setState("State2");
-        caretaker.addMemento(originator.createMemento());
-
-        // Change Again
-        originator.setState("State3");
-        System.out.println("Current State: " + originator.getState());
+        editor.setState("c");
 
         // Undo
-        originator.restoreMemento(caretaker.undo());
-        System.out.println("After Undo: " + originator.getState());
-
-        // Undo Again
-        originator.restoreMemento(caretaker.undo());
-        System.out.println("After Second Undo: " + originator.getState());
+        editor.restore(history.undo());
+        System.out.println("After Undo: " + editor.getState());
     }
 }
 

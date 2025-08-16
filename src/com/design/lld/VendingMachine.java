@@ -1,4 +1,4 @@
-package com.design.pattern.behavioural;
+package com.design.lld;
 
 import java.util.ArrayList;
 import java.util.List;
